@@ -1,5 +1,7 @@
 # 手勢偵測與圖片播放器
 
+GitHub 儲存庫：[20261028_gesture](https://github.com/helina2026ai-code/20261028_gesture)。
+
 左側使用攝影機即時偵測手勢，右側顯示圖片，以 FastAPI 提供網頁。Python 3.14、uv 與 pip 依賴已整理，提供 Render 部署設定及 GitHub Actions 測試。
 
 ```powershell
