@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="900" viewBox="0 0 1200 900">
+  <defs><linearGradient id="mist" x2="0" y2="1"><stop stop-color="#d4dfc2"/><stop offset="1" stop-color="#92b39c"/></linearGradient><path id="tree" d="M-8 0V-140H8V0zm-70-85 78-235L78-85zm12-80 66-210 66 210z"/></defs>
+  <path fill="url(#mist)" d="M0 0h1200v900H0z"/>
+  <path d="m493 0 247 900h180L615 0z" fill="#f2edc5" opacity=".16"/><path d="m605 0 394 900h93L681 0z" fill="#f9f3d6" opacity=".12"/>
+  <g fill="#8ba890"><use href="#tree" x="160" y="530"/><use href="#tree" x="420" y="580"/><use href="#tree" x="680" y="540"/><use href="#tree" x="900" y="560"/><use href="#tree" x="1110" y="500"/></g>
+  <path d="M0 656q340-107 640-12t560-26v282H0z" fill="#759982"/>
+  <g fill="#456e59"><use href="#tree" transform="translate(90 800) scale(1.5)"/><use href="#tree" transform="translate(340 720) scale(1.2)"/><use href="#tree" transform="translate(865 760) scale(1.4)"/><use href="#tree" transform="translate(1120 730) scale(1.8)"/></g>
+  <path d="M0 852q228-157 434-42t766-65v155H0z" fill="#325747"/>
+  <path d="M625 611q-149 103-32 155t134 134H444q28-104 48-148-9-65 133-141z" fill="#d4cda5"/>
+  <g fill="#d2dba9" opacity=".8"><circle cx="479" cy="535" r="3"/><circle cx="714" cy="464" r="3"/><circle cx="617" cy="571" r="4"/><circle cx="584" cy="428" r="2"/></g>
+</svg>

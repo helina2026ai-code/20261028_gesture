@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="900" viewBox="0 0 1200 900">
+  <defs><linearGradient id="sky" x2="0" y2="1"><stop stop-color="#dab6a2"/><stop offset="1" stop-color="#f1d0a4"/></linearGradient><linearGradient id="sand" x2="0" y2="1"><stop stop-color="#d78b5c"/><stop offset="1" stop-color="#b56345"/></linearGradient></defs>
+  <path fill="url(#sky)" d="M0 0h1200v900H0z"/><circle cx="815" cy="270" r="100" fill="#f8dfaa"/>
+  <path d="M0 484q204-124 444-16t756-25v457H0z" fill="#e4b582"/>
+  <path d="M0 652q363-262 681-81t519-8v337H0z" fill="#dba16d"/>
+  <path d="M0 744q270 20 469-171 264-267 731-2v329H0z" fill="url(#sand)"/>
+  <path d="M469 573q272-261 731-2-305-127-477 87T291 900H0q307-143 469-327z" fill="#e6ae78"/>
+  <path d="M0 844q277-133 473-232" fill="none" stroke="#f2ca95" stroke-width="3" opacity=".5"/>
+  <g fill="#735e4a"><path d="M155 662v-93h12v39h17v-24h11v35h-28v43zm-18-45v-31h-10v43h28v-12z"/><ellipse cx="161" cy="664" rx="40" ry="5" opacity=".18"/></g>
+  <g fill="#9a674a" opacity=".7"><ellipse cx="738" cy="792" rx="6" ry="3"/><ellipse cx="768" cy="768" rx="5" ry="3"/><ellipse cx="794" cy="747" rx="4" ry="2"/><ellipse cx="816" cy="729" rx="3" ry="2"/></g>
+</svg>

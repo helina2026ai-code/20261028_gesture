@@ -1,0 +1,42 @@
+name: Project checks
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version-file: .python-version
+          cache: pip
+      - uses: actions/setup-node@v7
+        with:
+          node-version: "24"
+          package-manager-cache: false
+      - name: Install deployment dependencies and uv
+        run: python -m pip install -r requirements.txt uv==0.13.3
+      - name: Check lockfile and requirements export
+        run: |
+          uv lock --check
+          uv export --locked --no-dev --no-emit-project --no-hashes --output-file requirements.txt
+          git diff --exit-code -- requirements.txt
+      - name: Check installed dependency compatibility
+        run: python -m pip check
+      - name: Check Python syntax and HTTP routes
+        run: |
+          python -m compileall -q main.py tests
+          python -m unittest discover -s tests -p "test_*.py"
+      - name: Check JavaScript syntax and gesture behavior
+        run: |
+          node --check static/bootstrap.js
+          node --input-type=module --check < static/app.js
+          node --test tests/*.test.mjs

@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>手勢映廊｜用手勢翻閱風景</title>
+    <link rel="stylesheet" href="./style.css">
+    <script src="./bootstrap.js" defer></script>
+  </head>
+  <body>
+    <main>
+      <header class="page-header">
+        <div><p class="eyebrow">GESTURE GALLERY · 手勢圖片播放器</p><h1>揮揮手，換個風景。</h1>
+          <p class="intro">張開手掌左右移動來換圖，翻轉手心與手背，讓圖片換個方向。</p></div>
+        <span class="privacy"><span></span>影像與圖片只在裝置內處理</span>
+      </header>
+      <section id="startup-notice" class="startup-notice" role="alert" hidden>
+        <strong id="startup-title"></strong>
+        <p id="startup-message"></p>
+        <p>在專案終端機執行 <code>uv run --frozen python main.py</code>，並保持終端機開啟，再前往 <a href="http://localhost:8000">http://localhost:8000</a>。</p>
+      </section>
+      <div class="workspace">
+        <section class="panel camera-panel" aria-labelledby="camera-heading">
+          <div class="panel-header"><h2 id="camera-heading"><span class="section-number">01</span> 手勢控制</h2><span class="pill">鏡像預覽</span></div>
+          <div class="camera">
+            <video id="video" autoplay playsinline muted aria-label="攝影機鏡像畫面"></video>
+            <canvas id="overlay" aria-hidden="true"></canvas>
+            <div id="camera-placeholder" class="camera-placeholder"><span class="camera-icon" aria-hidden="true">◎</span><strong>讓你的手，成為遙控器。</strong><span>單手控制換圖，雙手也能翻面互動</span></div>
+            <span class="camera-badge" id="badge">攝影機未啟動</span>
+            <div class="direction-hints" aria-hidden="true"><span>← 上一張</span><span>下一張 →</span></div>
+          </div>
+          <div class="camera-content">
+            <div class="camera-actions"><button id="start" class="primary" type="button">開啟攝影機</button><button id="stop" type="button" disabled>停止偵測</button></div>
+            <p id="status" role="status" aria-live="polite">尚未開啟攝影機，也可以先用右側按鈕瀏覽圖片。</p>
+            <p class="pose-line"><span class="status-dot" id="tracking-dot"></span><span id="pose">等待手勢</span></p>
+          </div>
+          <div class="gesture-guide" aria-label="手勢操作說明">
+            <div><span class="gesture-symbol" aria-hidden="true">←</span><span><strong>手掌向左移</strong><small>上一張</small></span></div>
+            <div><span class="gesture-symbol" aria-hidden="true">→</span><span><strong>手掌向右移</strong><small>下一張</small></span></div>
+            <div><span class="gesture-symbol" aria-hidden="true">☝</span><span><strong>只伸出食指</strong><small>第一張 · 停留約半秒</small></span></div>
+            <div><span class="gesture-symbol pinky-symbol" aria-hidden="true">I</span><span><strong>只伸出小指</strong><small>最後一張 · 停留約半秒</small></span></div>
+            <div class="flip-guide"><span class="gesture-symbol" aria-hidden="true">⇆</span><span><strong>手心／手背翻面</strong><small>圖片左右翻轉 · 支援單手與雙手</small></span></div>
+            <div class="flip-guide"><span class="gesture-symbol" aria-hidden="true">✊</span><span><strong>單手張開後握拳</strong><small>圖片上下翻轉 · 握拳停留約半秒</small></span></div>
+            <div class="flip-guide"><span class="gesture-symbol" aria-hidden="true">↔</span><span><strong>雙手拉開／靠近</strong><small>放大／縮小圖片 · 100%–300%</small></span></div>
+            <div class="flip-guide"><span class="gesture-symbol" aria-hidden="true">↻</span><span><strong>雙手一高一低</strong><small>像轉方向盤一樣，旋轉圖片</small></span></div>
+          </div>
+          <p class="hint">雙手先張開稍停，再拉開或調整高低；放下手後保留效果。換圖與握拳使用單手，方向以鏡像畫面為準。</p>
+        </section>
+        <section class="panel gallery-panel" aria-labelledby="gallery-heading">
+          <div class="panel-header"><h2 id="gallery-heading"><span class="section-number">02</span> 圖片展示</h2><span id="collection-label" class="pill">風景選集</span></div>
+          <figure class="slide-stage">
+            <div id="image-viewport" class="image-viewport"><img id="slide-image" src="./images/01-mountains.svg" alt="山間晨光" decoding="async"></div>
+            <p id="image-error" class="image-error" role="alert" hidden>這張圖片無法載入，請切換其他圖片或重新選取。</p>
+            <span class="slide-counter" id="slide-counter">01 / 05</span>
+          </figure>
+          <div class="slide-details"><div><p class="eyebrow" id="slide-kicker">LANDSCAPE COLLECTION</p><h3 id="slide-title">山間晨光</h3><p id="slide-description">讓視線越過稜線，留一點時間給遠方。</p></div><span class="slide-mark" aria-hidden="true">↗</span></div>
+          <div id="slide-dots" class="slide-dots" role="group" aria-label="選擇圖片"></div>
+          <div class="gallery-controls" role="group" aria-label="圖片播放控制">
+            <button type="button" data-action="first" aria-label="第一張" title="第一張（Home）">⇤<span>第一張</span></button>
+            <button type="button" data-action="previous" aria-label="上一張" title="上一張（方向鍵左）">←<span>上一張</span></button>
+            <button type="button" data-action="next" aria-label="下一張" title="下一張（方向鍵右）">→<span>下一張</span></button>
+            <button type="button" data-action="last" aria-label="最後一張" title="最後一張（End）">⇥<span>最後一張</span></button>
+          </div>
+          <div class="image-transform-controls"><span id="mirror-state">目前：原始方向</span><div class="transform-buttons"><button id="mirror-button" type="button" aria-pressed="false">⇆ 左右翻轉</button><button id="vertical-mirror-button" type="button" aria-pressed="false">↕ 上下翻轉</button></div></div>
+          <div class="view-controls" role="group" aria-label="圖片縮放與旋轉控制">
+            <div class="view-controls-header"><span>圖片大小與角度</span><output id="view-state" aria-label="目前圖片縮放比例及旋轉角度">100% · 0°</output></div>
+            <div class="view-buttons"><button id="zoom-out" type="button" aria-label="縮小圖片" title="縮小 25%" disabled>− 縮小</button><button id="zoom-in" type="button" aria-label="放大圖片" title="放大 25%">＋ 放大</button><button id="rotate-left" type="button" aria-label="圖片向左旋轉 15 度">↶ 左轉</button><button id="rotate-right" type="button" aria-label="圖片向右旋轉 15 度">↷ 右轉</button></div>
+            <button id="reset-view" class="reset-view" type="button" disabled>還原大小／角度</button>
+            <p class="hint">放大或旋轉後，超出展示框的部分會裁切。</p>
+          </div>
+          <p id="navigation-status" class="navigation-status" role="status" aria-live="polite">第 1 張，共 5 張。</p>
+          <div class="image-picker"><div><strong>換成你的回憶</strong><small>選擇多張圖片，僅在此瀏覽器開啟</small></div><button id="choose-images" type="button">選擇圖片</button><input id="image-files" type="file" accept="image/jpeg,image/png,image/webp,image/gif,image/avif" multiple hidden></div>
+          <button id="restore-samples" class="text-button" type="button" hidden>返回範例圖片</button>
+          <p id="upload-status" class="hint" role="status" aria-live="polite"></p>
+        </section>
+      </div>
+      <footer><span>不開攝影機也能使用按鈕、方向鍵與 Home / End 瀏覽。</span><span>攝影機需使用 localhost 或 HTTPS · 首次載入模型需連網</span></footer>
+      <noscript><p class="noscript">請啟用 JavaScript，以使用圖片控制與手勢辨識。</p></noscript>
+    </main>
+  </body>
+</html>
